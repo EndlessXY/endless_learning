@@ -14,6 +14,6 @@ message(${OpenCV_LIBRARIES})
 
 
 add_executable(codes
-        video_read_save.cpp)
+        time_util.cpp)
 
 target_link_libraries(codes ${OpenCV_LIBS})
