@@ -28,6 +28,7 @@ private:
     image_transport::Publisher mSonarImgPub;
 
     void GetImagData();
+    void GetVideo();
 };
 }
 

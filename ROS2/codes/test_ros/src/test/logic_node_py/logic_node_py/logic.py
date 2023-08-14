@@ -28,9 +28,10 @@ class Logic(Node):
     def sonar_image_listener_callback(self, ros_data):
         self.current_row += 1
         cv_image = self.bridge.imgmsg_to_cv2(ros_data, "bgr8")
-        self.update_cache(cv_image)
+        # self.update_cache(cv_image)
         self.get_logger().info(f"Received Image: {self.current_row}")
-        cv2.imshow('Received Image', self.cache_image)
+        # cv2.imshow('Received Image', self.cache_image)
+        cv2.imshow('Received Image', cv_image)
         cv2.waitKey(5)
 
 
