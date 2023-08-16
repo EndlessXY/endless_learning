@@ -1,11 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-@作者: 古月居(www.guyuehome.com)
-@说明: ROS2动作示例-请求执行圆周运动动作的客户端
-"""
-
 import rclpy                                      # ROS2 Python接口库
 from rclpy.node   import Node                     # ROS2 节点类
 from rclpy.action import ActionClient             # ROS2 动作客户端类
