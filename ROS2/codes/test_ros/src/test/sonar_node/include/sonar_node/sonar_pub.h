@@ -24,11 +24,22 @@ private:
     int pHeight;
     int pWidth;
     int pChannels;
+    int mHeight;
+    int mWidth;
+    int mChannels;
+    int mImgSize;
     int mFrameIndex;
+    int mPingIndex;
+    int mWindowHeight;
+    int mWindowWidth;
+    unsigned char *mSonarImageData;
     image_transport::Publisher mSonarImgPub;
+    cv::Mat mSonarImg;
 
     void GetImagData();
     void GetVideo();
+    void fillWithColor(unsigned char* imageData, int width, int height, int channels, unsigned char r, unsigned char g, unsigned char b);
+    void GetSonarData(cv::Mat sonarImg);
 };
 }
 
