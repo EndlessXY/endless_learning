@@ -23,7 +23,12 @@ AIShip::SonarPub::SonarPub():Node("Sonar_pub") {
 
     rmw_qos_profile_t custom_qos_profile = rmw_qos_profile_sensor_data;
     custom_qos_profile.reliability = RMW_QOS_POLICY_RELIABILITY_RELIABLE;
-    mSonarImgPub = image_transport::create_publisher(this, "sonar/image_raw", custom_qos_profile);
+//    rmw_qos_profile_t custom_qos_profile = rmw_qos_profile_sensor_data;
+//    custom_qos_profile.reliability = RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT;//RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT; RMW_QOS_POLICY_RELIABILITY_RELIABLE
+    custom_qos_profile.history = RMW_QOS_POLICY_HISTORY_KEEP_LAST;
+    custom_qos_profile.depth = 1;
+
+    mSonarImgPub = image_transport::create_publisher(this, "sonar/sonar_live", custom_qos_profile);
     mSonarImg = cv::imread("/opt/ubiai/aiship/data/test/image/sonar.jpg");
     cv::cvtColor(mSonarImg, mSonarImg, CV_RGB2BGR);
     GetSonarData(mSonarImg);
@@ -126,6 +131,15 @@ void AIShip::SonarPub::GetSonarData(cv::Mat sonarImg) {
         cv::resize(showImg, showImg, cv::Size(mWindowWidth, mWindowHeight));
         cv::imshow("sonar", showImg);
         cv::waitKey(5);
+
+        // Publish sonar image
+        std_msgs::msg::Header header;
+        header.stamp = this->get_clock()->now();
+        header.frame_id = "sonar_ping_" + std::to_string(mPingIndex);
+        sensor_msgs::msg::Image::SharedPtr img_msg = cv_bridge::CvImage(header, "bgr8", showImg).toImageMsg();
+        mSonarImgPub.publish(img_msg);
+        RCLCPP_INFO(this->get_logger(), "sonar pub %d", mPingIndex);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
         ++mPingIndex;
     }
 }

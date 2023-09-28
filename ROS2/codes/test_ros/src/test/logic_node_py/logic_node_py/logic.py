@@ -3,7 +3,7 @@ import numpy as np
 import rclpy
 from cv_bridge import CvBridge
 from rclpy.node import Node
-from rclpy.qos import QoSProfile, ReliabilityPolicy
+from rclpy.qos import QoSProfile, ReliabilityPolicy, QoSPresetProfiles
 from sensor_msgs.msg import CompressedImage
 from sensor_msgs.msg import Image
 
@@ -13,7 +13,7 @@ class Logic(Node):
         qos_prof_file = QoSProfile(depth=2)
         qos_prof_file.reliability = ReliabilityPolicy.RMW_QOS_POLICY_RELIABILITY_RELIABLE
 
-        self.sonar_image_sub = self.create_subscription(Image, "sonar/image_raw", self.sonar_image_listener_callback, qos_prof_file)
+        self.sonar_image_sub = self.create_subscription(Image, "sonar/sonar_live", self.sonar_image_listener_callback, qos_prof_file)
         self.bridge = CvBridge()
         self.cache_image = np.zeros((960, 1920, 3), dtype=np.uint8)
         self.current_row = 0
