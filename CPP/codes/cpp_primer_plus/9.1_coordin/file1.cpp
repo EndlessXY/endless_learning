@@ -18,3 +18,5 @@ int main()
     cout << "Bye! \n";
     return 0;
 }
+
+// g++ -I ./include -o test ./src/*.cpp file1.cpp
