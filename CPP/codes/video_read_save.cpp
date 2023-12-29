@@ -6,7 +6,7 @@
 
 
 int main(int argc, char** argv) {
-    cv::VideoCapture cap("/home/dsz/Ubinavi/Data/aiship_st/崇明数据/001/aiship_data_20230710/drain_outlet/video/camera_left_2023_0710_095629.mp4");
+    cv::VideoCapture cap("/Users/dsz/Study/Data/video/test.mp4");
     if(!cap.isOpened()) {
         std::cout << "Error opening video stream or file" << std::endl;
     }
@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
     std::cout << "video width: " << frame_width << std::endl;
     std::cout << "video height: " << frame_height << std::endl;
 
-    cv::VideoWriter video("/home/dsz/Downloads/out.mp4", cv::VideoWriter::fourcc('a', 'v', 'c', '1'), 30, cv::Size(frame_width, frame_height));
+    cv::VideoWriter video("/Users/dsz/Study/Data/video/out.mp4", cv::VideoWriter::fourcc('a', 'v', 'c', '1'), 30, cv::Size(frame_width, frame_height));
     cv::Mat frame;
     while(1) {
         cap >> frame;
@@ -35,3 +35,6 @@ int main(int argc, char** argv) {
     cv::destroyAllWindows();
     return 0;
 }
+
+
+//  g++ -std=c++11 video_read_save.cpp -o test `pkg-config --cflags --libs opencv4`
